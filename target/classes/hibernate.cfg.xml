@@ -15,7 +15,7 @@
         <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">100</property>
  
-        <!-- Enable Hibernate's current session context -->
+        <!-- Enable Hibernate's current session context --> 
         <property name="current_session_context_class">thread</property>
  
         <!-- Disable the second-level cache -->
@@ -23,9 +23,11 @@
  
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
         <property name="hbm2ddl.auto">create</property>
  
         <mapping class="chap01.crud.Member" />
+        <mapping class="chap04.BoardArticle" />
     </session-factory>
  
 </hibernate-configuration>

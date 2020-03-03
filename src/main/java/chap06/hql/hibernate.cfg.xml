@@ -27,7 +27,6 @@
         <property name="hbm2ddl.auto">create</property>
  
         <mapping class="chap01.crud.Member" />
-        <mapping class="chap05.paging.BoardArticle" />
         <mapping class="chap06.hql.UserDetail" />
     </session-factory>
  

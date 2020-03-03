@@ -6,6 +6,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
 
 public class DaoCommon<T> {
 	
@@ -18,6 +19,22 @@ public class DaoCommon<T> {
 		factory = HibernateUtil.getSessionFactory();
 		this.clazz = clazz;
 		this.boardName = clazz.getSimpleName();
+	}
+	
+	public int deleteAllSetTable() {
+		Session session = factory.getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		int result = session.createQuery("delete from " + boardName).executeUpdate();
+		tx.commit();
+		return result;
+	}
+	
+	public long count() {
+		Session session = factory.getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		long result = (Long) session.createCriteria(clazz).setProjection(Projections.rowCount()).uniqueResult();
+		tx.commit();
+		return result;
 	}
 	
 	public List<?> getPagingList(int requestPage) {

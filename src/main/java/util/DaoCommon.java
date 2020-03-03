@@ -5,11 +5,11 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
-import chap01.crud.Member;
+import org.hibernate.Transaction;
 
 public class DaoCommon<T> {
 	
+	public static int numPerPage = 10;
 	private SessionFactory factory;
 	private Class clazz;
 	private String boardName;
@@ -18,6 +18,21 @@ public class DaoCommon<T> {
 		factory = HibernateUtil.getSessionFactory();
 		this.clazz = clazz;
 		this.boardName = clazz.getSimpleName();
+	}
+	
+	public List<?> getPagingList(int requestPage) {
+		 Session session = factory.getCurrentSession();
+		 Transaction tx = session.beginTransaction();
+		 Query query = (Query) session.createQuery("from " + boardName + " order by id asc");
+		 
+		 // query.setFirstResult((요청페이지-1) * 페이지당글의개수);
+		 query.setFirstResult((requestPage-1) * numPerPage);		// 0, 10
+		 // query.setMaxResults(페이지당글의개수);
+		 query.setMaxResults(numPerPage);	// 9, 19
+		 
+		 List<?> members = query.list();
+		 tx.commit();
+		 return members;
 	}
 	
 	public List<?> selectList() {
@@ -58,6 +73,4 @@ public class DaoCommon<T> {
 		session.save(member);
 		session.getTransaction().commit();
 	}
-	
-	
 }

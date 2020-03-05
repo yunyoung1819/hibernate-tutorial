@@ -19,22 +19,13 @@ public class Student {
 	public Student() {
 	}
 
-	public Student(int id, String name, int age, int kor, int eng, int math) {
+	public Student(String name, int age, int kor, int eng, int math) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.age = age;
 		this.kor = kor;
 		this.eng = eng;
 		this.math = math;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -82,5 +73,4 @@ public class Student {
 		return "Student [id=" + id + ", name=" + name + ", age=" + age + ", kor=" + kor + ", eng=" + eng + ", math="
 				+ math + "]";
 	}
-	
 }

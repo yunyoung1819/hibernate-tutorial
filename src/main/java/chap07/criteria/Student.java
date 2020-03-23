@@ -1,10 +1,14 @@
 package chap07.criteria;
 
+
+import org.hibernate.annotations.NamedQuery;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
+@NamedQuery(name="FindByAge", query="from Student where age >= ?")
 public class Student {
 	
 	@Id

@@ -8,6 +8,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -105,7 +106,37 @@ public class Test_Student {
 	// Native Query
 	@Test
 	public void nativeQuery() throws Exception {
+	    Session session = factory.getCurrentSession();
+	    session.beginTransaction();
+	    Query query = session.createSQLQuery("SELECT * FROM \"USER\".\"STUDENT\"").addEntity(Student.class);
+	    List<Student> list = query.list();
+	    session.getTransaction().commit();
 
+        System.out.println("일반 그냥 순수 쿼리로 뽑은 것");
+	    for (Student student : list) {
+            System.out.println(student);
+        }
 	}
+
+	// Example Query
+    @Test
+    public void exampleQuery() throws Exception {
+	    Session session = factory.getCurrentSession();
+	    session.beginTransaction();
+
+	    Student student = new Student();
+	    student.setKor(90);
+
+	    Criteria criteria = session.createCriteria(Student.class);
+        Example example = Example.create(student);
+	    criteria.add(example);
+
+	    List<Student> list = criteria.list();
+
+        session.getTransaction().commit();
+        System.out.println("샘플로 얻어진 객체 보여주기");
+        list.forEach(n -> System.out.println(n));
+        System.out.println("리스트 사이즈" + list.size());
+    }
 
 }

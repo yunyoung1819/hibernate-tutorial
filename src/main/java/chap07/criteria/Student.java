@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-@NamedQuery(name="FindByAge", query="from Student where age >= ?")
+@NamedQuery(name="FindByAge", query="from Student where age>=?")
 public class Student {
 	
 	@Id
